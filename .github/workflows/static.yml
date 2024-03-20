@@ -39,15 +39,19 @@ jobs:
           node-version: '14'
           # Upload entire repository
           # path: '.'
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
       - name: Build
-        run: |
-          npm install
-          npm run build  # Or your build script that generates the `public` directory
-      - name: Deploy
+        run: hugo --minify
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
+
       # - name: Deploy to GitHub Pages
       #   id: deployment
       #   uses: actions/deploy-pages@v4
